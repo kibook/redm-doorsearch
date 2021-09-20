@@ -2,17 +2,15 @@ function AddDoorToSystemNew(doorHash, p1, p2, p3, threadId, p5, p6)
 	return Citizen.InvokeNative(0xD99229FE93B46286, doorHash, p1, p2, p3, threadId, p5, p6)
 end
 
-RegisterCommand('door', function(source, args, raw)
-	local door = tonumber(args[1])
-	
+RegisterNetEvent('doorsearch:setDoorState', function(door, state)
 	if not IsDoorRegisteredWithSystem(door) then
 		AddDoorToSystemNew(door, 1, 1, 0, 0, 0, 0)
 	end
 
-	DoorSystemSetDoorState(door, tonumber(args[2]))
+	DoorSystemSetDoorState(door, state)
 end)
 
-RegisterCommand('doorsearch', function(source, args, raw)
+RegisterNetEvent('doorsearch:search', function()
 	CreateThread(function()
 		local coords = GetEntityCoords(PlayerPedId())
 
